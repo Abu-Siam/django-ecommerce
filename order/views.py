@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from account.models import MyUser
-from order.serializers import ProductSerializer,BlogSerializer,OrderSerializer
+from order.serializers import ProductSerializer,BlogSerializer,OrderSerializer,CategorySerializer,ProductCreateSerializer
 from order.models import Order,Product,Blog
 from rest_framework.permissions import IsAuthenticated
 
@@ -31,6 +31,15 @@ class ProductListView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request,category, format=None):
+        for item in request.data:
+
+            serializer = ProductCreateSerializer(data = item)
+            if serializer.is_valid():
+                serializer.save()
+
+        return Response({"data": serializer.data})
+
 
 class HomePageView(APIView):
     def get(self, request, format=None):

@@ -38,7 +38,7 @@ class Product(models.Model):
     title=models.CharField(max_length=200)
     detail=models.TextField()
     specs=models.TextField()
-    category=models.ForeignKey(Category,on_delete=models.CASCADE)
+    category=models.ForeignKey(Category,on_delete=models.CASCADE,null=True, blank=True)
     status=models.BooleanField(default=True)
     rating = models.IntegerField(choices=RATING,max_length=150)
     date_added=models.DateTimeField(default = datetime.now)

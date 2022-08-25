@@ -92,7 +92,7 @@ class UserPasswordResetEnterPhoneSerializer(serializers.ModelSerializer):
             print('link',link)
             return attrs
         else:
-            raise ValidationError("You are not a registered user")
+            raise ValidationError("Invalid user phone number")
 
 
 class EditUserProfileSerializer(serializers.ModelSerializer):
