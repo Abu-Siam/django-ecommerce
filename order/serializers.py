@@ -30,9 +30,10 @@ class BlogSerializer(serializers.ModelSerializer):
         fields = ('title','author')
 
 class ProductCreateSerializer(serializers.ModelSerializer):
+    category = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Product
-        fields = ('title','specs','rating','price','status','detail')
+        fields = ('title','specs','rating','price','status','detail','category')
     def create(self,validate_data):
         return Product.objects.create(**validate_data)
 

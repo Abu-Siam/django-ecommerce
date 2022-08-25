@@ -31,12 +31,14 @@ class ProductListView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    def post(self, request,category, format=None):
+    def post(self, request, format=None):
         for item in request.data:
-
+            category_serializer = CategorySerializer(data= item['category'])
+            category_serializer.is_valid()
+            category = category_serializer.save()
             serializer = ProductCreateSerializer(data = item)
             if serializer.is_valid():
-                serializer.save()
+                serializer.save(category=category)
 
         return Response({"data": serializer.data})
 
