@@ -11,7 +11,7 @@ from order.models import Order,Product,Blog,Category
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ('id','title',)
+        fields = ('title',)
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
@@ -33,7 +33,7 @@ class ProductCreateSerializer(serializers.ModelSerializer):
     category = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Product
-        fields = ('title','specs','rating','price','status','detail','category')
+        fields = ('title','specs','rating','price','status','detail','category','category_title')
     def create(self,validate_data):
         return Product.objects.create(**validate_data)
 
