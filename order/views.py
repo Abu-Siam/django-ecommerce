@@ -33,6 +33,9 @@ class ProductListView(APIView):
         except:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def post(self, request, format=None):
+        if request.data is None or len(request.data) == 0:
+            return Response({"error": "empty product list input"},status=status.HTTP_400_BAD_REQUEST)
+
         for item in request.data:
             category = Category.objects.filter(id=int(item['category']['id'])).exists()
 
@@ -48,8 +51,8 @@ class ProductListView(APIView):
             serializer = ProductCreateSerializer(data = item)
             if serializer.is_valid(raise_exception=True):
                 serializer.save(category=category)
-
         return Response({"data": serializer.data})
+
 
 
 class HomePageView(APIView):

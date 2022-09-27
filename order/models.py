@@ -41,7 +41,7 @@ class Product(models.Model):
     specs=models.TextField()
     category=models.ForeignKey(Category,on_delete=models.CASCADE,null=True, blank=True)
     status=models.BooleanField(default=True)
-    rating = models.IntegerField(choices=RATING,max_length=150)
+    rating = models.IntegerField(choices=RATING, default=1)
     date_added=models.DateTimeField(default = datetime.now)
     price=models.PositiveIntegerField(default=0)
     is_featured=models.BooleanField(default=False)

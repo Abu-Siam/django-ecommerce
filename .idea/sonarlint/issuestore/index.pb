@@ -3,8 +3,6 @@
 	manage.py,3/1/3156ad13e4d695cd526bbb7b031016ecba842270
 A
 ecommerce/asgi.py,b/3/b3e01fef4055bf16dcf9a9f2f7bb28c8dc52e545
-9
-	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 @
 requirements.txt,1/9/19359a61ae2446b51b549167b014da2fcf265768
 ?
