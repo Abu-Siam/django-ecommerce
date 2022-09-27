@@ -11,7 +11,7 @@ from order.models import Order,Product,Blog,Category
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ('title',)
+        fields = ('id','title',)
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:

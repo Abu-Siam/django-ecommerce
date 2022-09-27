@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
@@ -7,7 +8,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from account.models import MyUser
 from order.serializers import ProductSerializer,BlogSerializer,OrderSerializer,CategorySerializer,ProductCreateSerializer
-from order.models import Order,Product,Blog
+from order.models import Order, Product, Blog, Category
 from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
@@ -33,11 +34,19 @@ class ProductListView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def post(self, request, format=None):
         for item in request.data:
-            category_serializer = CategorySerializer(data= item['category'])
-            category_serializer.is_valid()
-            category = category_serializer.save()
+            category = Category.objects.filter(id=int(item['category']['id'])).exists()
+
+            # category = CategorySerializer(data = category)
+            # if category.is_valid():
+            #     category = category.data
+            if not category:
+                category_serializer = CategorySerializer(data= item['category'])
+                category_serializer.is_valid(raise_exception=True)
+                category = category_serializer.save()
+            else:
+                category = Category.objects.get(id=int(item['category']['id']))
             serializer = ProductCreateSerializer(data = item)
-            if serializer.is_valid():
+            if serializer.is_valid(raise_exception=True):
                 serializer.save(category=category)
 
         return Response({"data": serializer.data})
